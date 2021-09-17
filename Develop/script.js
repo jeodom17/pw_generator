@@ -106,6 +106,7 @@ function generatePassword() {
     "~",
   ];
   var selections = [];
+  var resultPassword = "";
 
   var userInput = prompt(
     "Choose a number from 8 to 128 to determine your password length."
@@ -119,14 +120,41 @@ function generatePassword() {
     return null;
   }
   if (includeUpper === true) {
-    var includeLower = confirm(
-      "Would you like lower case letters in your password?"
-    );
+    selections = selections.concat(upperCase);
   }
 
-  // var test = confirm('quit');
-  // if (test === true) {
-  //   return null;
-  // }
-  // return(6);
+  var includeLower = confirm(
+    "Would you like lower case letters in your password?"
+  );
+
+  if (includeLower === true) {
+    selections = selections.concat(lowerCase);
+  }
+
+  var includeNumbers = confirm("Would you like numbers in your password?");
+
+  if (includeNumbers === true) {
+    selections = selections.concat(numbers);
+  }
+
+  var includeSpecial = confirm(
+    "Would you like special characters in your password?"
+  );
+
+  if (includeSpecial === true) {
+    selections = selections.concat(characters);
+  }
+
+  if (selections.length === 0) {
+    alert("You must select at least one character class. Please try again.");
+    return null;
+  }
+
+  for (var i = 0; i < userInput; i++) {
+    var randIndex = Math.floor(Math.random() * selections.length);
+    var randChar = selections[randIndex];
+    resultPassword += randChar;
+  }
+
+  return resultPassword;
 }
